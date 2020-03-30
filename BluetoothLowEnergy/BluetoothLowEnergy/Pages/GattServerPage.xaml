@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<util:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:util="clr-namespace:BluetoothLowEnergy.Util;assembly=BluetoothLowEnergy"
+               Title="GattServerPage"
+             x:Class="BluetoothLowEnergy.Pages.GattServerPage">
+    
+    <StackLayout VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Orientation="Vertical">
+        
+        <Grid HorizontalOptions="FillAndExpand"
+            VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackLayout Orientation="Vertical"
+                      VerticalOptions="Center"
+                      HorizontalOptions="StartAndExpand"
+                      Padding="{StaticResource GridPadding}">
+                <Label Text="{Binding AddressAndName, StringFormat='设备名称 : {0}'}"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center" />
+                <Label Text="{Binding Manufacturer, StringFormat='生产厂商 : {0}'}"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal"
+                      VerticalOptions="Center"
+                      HorizontalOptions="EndAndExpand"
+                      Grid.Column="1"
+                      Padding="{StaticResource GridPadding}">
+                <Label 
+                   Text="{Binding Connection}"
+                    />
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"
+                               HeightRequest="20">
+                    <ActivityIndicator.WidthRequest>
+                        <OnPlatform x:TypeArguments="x:Double"
+                              WinPhone="100"
+                              Android="20"
+                              iOS="20" />
+                    </ActivityIndicator.WidthRequest>
+                </ActivityIndicator>
+            </StackLayout>
+        </Grid>
+        <StackLayout HorizontalOptions="FillAndExpand"
+                    VerticalOptions ="FillAndExpand">
+            <Editor 
+                    Text="{Binding WritesValue}" AutoSize="TextChanges"/>
+                
+            <Button Command="{Binding WriteBytesCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    
+                    IsEnabled="{Binding CanWrite}"
+                    Text="Send"/>
+            <Label IsEnabled="{Binding CanNotify}"
+                                     Text="Notify:"/>
+            <Switch IsToggled="{Binding Path=NotifyEnabled, Mode=TwoWay}"/>
+            <ScrollView  FlowDirection="MatchParent"
+                         VerticalScrollBarVisibility="Default" > 
+                <Label HorizontalOptions="FillAndExpand"
+                    Text="{Binding ReciveData}"/>
+            </ScrollView>
+            
+
+        </StackLayout>
+
+    </StackLayout>
+</util:BasePage>

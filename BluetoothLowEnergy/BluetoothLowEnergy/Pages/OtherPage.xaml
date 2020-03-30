@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BluetoothLowEnergy.Pages.OtherPage"
+             Title="Test">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="Start" />
+
+            <Label Text="Menu" VerticalOptions="Start"/>
+
+            <ListView x:Name="listView"
+              Margin="20">
+            <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+                            <StackLayout Padding="15,0">
+                                <Label Text="{Binding DataTitle}" FontAttributes="Bold"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Text="复制数据库" Clicked="Button_Clicked"/>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

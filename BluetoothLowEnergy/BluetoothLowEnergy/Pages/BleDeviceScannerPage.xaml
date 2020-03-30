@@ -1,0 +1,255 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BluetoothLowEnergy.Pages.BleDeviceScannerPage"
+            xmlns:util="clr-namespace:BluetoothLowEnergy.Util;assembly=BluetoothLowEnergy"
+            Title="BLE蓝牙">
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Text="开始扫描"
+                 Clicked="ToolbarItem_Clicked"
+                 Command="ScanForDevicesCommand"/>
+
+    </TabbedPage.ToolbarItems>
+    <util:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:util="clr-namespace:BluetoothLowEnergy.Util;assembly=BluetoothLowEnergy"
+             Title="{Binding notPairedDeviceTitle}">
+    <StackLayout Orientation="Vertical"  >
+
+      <StackLayout Orientation="Horizontal"
+             Padding="{StaticResource GridPadding}">
+        <StackLayout HorizontalOptions="Start"
+              Orientation="Horizontal">
+          <Label Text="Scanning"
+         IsVisible="{Binding IsScanning}"
+         VerticalOptions="Center" />
+          <AbsoluteLayout IsVisible="{Binding IsScanning}">
+            <ActivityIndicator IsRunning="{Binding IsScanning}">
+              <ActivityIndicator.WidthRequest>
+                <OnPlatform x:TypeArguments="x:Double"
+                 Android="40"
+                 iOS="40"
+                 WinPhone="100" />
+              </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+            <Label AbsoluteLayout.LayoutBounds=".5,.5,-1,-1"
+          AbsoluteLayout.LayoutFlags="PositionProportional"
+          Text="{Binding ScanTimeRemaining}" />
+          </AbsoluteLayout>
+        </StackLayout>
+      </StackLayout>
+      <StackLayout>
+        <ListView ItemsSource="{Binding FoundDevices}"
+        ItemTapped="ListView_OnItemTapped"
+        ItemSelected="ListView_OnItemSelected"
+        HasUnevenRows="True"
+        SeparatorColor="#aaaaaa"
+        VerticalOptions="Center"
+        HorizontalOptions="FillAndExpand">
+          <ListView.SeparatorVisibility>
+            <OnPlatform x:TypeArguments="SeparatorVisibility"
+            Android="None"
+            iOS="Default"
+            WinPhone="Default" />
+          </ListView.SeparatorVisibility>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell >
+                <Frame Margin="{StaticResource GridPadding}"
+         Padding="{StaticResource GridPadding}">
+
+                  <Grid RowSpacing="4">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0"
+           Grid.Row="0"
+           Text="设备地址"
+           FontAttributes="Bold" />
+                    <Label Grid.Column="0"
+           Grid.Row="1"
+           Text="设备名称"
+           FontAttributes="Bold" />
+                    <Label Grid.Column="0"
+           Grid.Row="2"
+           Text="信号强度"
+           FontAttributes="Bold" />
+
+                    <Label Grid.Column="1"
+           Grid.Row="0"
+           Text="{Binding Address}" />
+                    <Label Grid.Column="1"
+           Grid.Row="1"
+           Text="{Binding AddressAndName}" />
+                    <Label Grid.Column="1"
+           Grid.Row="2"
+           Text="{Binding Signal}" />
+
+                    <StackLayout
+                 Grid.Column="1"
+                 Grid.RowSpan="3"
+                 Orientation="Horizontal"
+                 HorizontalOptions="FillAndExpand">
+                      <Button Text="连接"
+                Command="{Binding ConnectToDeviceCommand}"
+             HorizontalOptions="EndAndExpand"
+                                           >
+                        <Button.TextColor>
+                          <OnPlatform x:TypeArguments="Color"
+                   WinPhone="DarkOrange" />
+                        </Button.TextColor>
+                      </Button>
+                    </StackLayout>
+
+
+                  </Grid>
+                </Frame>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+
+
+      </StackLayout>
+
+    </StackLayout>
+
+  </util:BasePage>
+  <util:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:util="clr-namespace:BluetoothLowEnergy.Util;assembly=BluetoothLowEnergy"
+                Title="{Binding alreadyPairedDeviceTitle}">
+    <StackLayout Orientation="Vertical" >
+      <StackLayout Orientation="Horizontal"
+             Padding="{StaticResource GridPadding}">
+        <StackLayout HorizontalOptions="Start"
+              Orientation="Horizontal">
+          <Label Text="Scanning"
+         IsVisible="{Binding IsScanning}"
+         VerticalOptions="Center" />
+          <AbsoluteLayout IsVisible="{Binding IsScanning}">
+            <ActivityIndicator IsRunning="{Binding IsScanning}">
+              <ActivityIndicator.WidthRequest>
+                <OnPlatform x:TypeArguments="x:Double"
+                 Android="40"
+                 iOS="40"
+                 WinPhone="100" />
+              </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+            <Label AbsoluteLayout.LayoutBounds=".5,.5,-1,-1"
+          AbsoluteLayout.LayoutFlags="PositionProportional"
+          Text="{Binding ScanTimeRemaining}" />
+          </AbsoluteLayout>
+        </StackLayout>
+      </StackLayout>
+      <StackLayout>
+
+        <ListView ItemsSource="{Binding FoundConnectDevices}"
+        ItemTapped="ListView_OnItemTapped"
+        ItemSelected="ListView_OnItemSelected"
+        HasUnevenRows="True"
+        SeparatorColor="#aaaaaa"
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+          <ListView.SeparatorVisibility>
+            <OnPlatform x:TypeArguments="SeparatorVisibility"
+            Android="None"
+            iOS="Default"
+            WinPhone="Default" />
+          </ListView.SeparatorVisibility>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell >
+                <Frame Margin="{StaticResource GridPadding}"
+         Padding="{StaticResource GridPadding}">
+
+
+
+                  <Grid RowSpacing="4">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0"
+           Grid.Row="0"
+           Text="设备地址"
+           FontAttributes="Bold" />
+                    <Label Grid.Column="0"
+           Grid.Row="1"
+           Text="设备名称"
+           FontAttributes="Bold" />
+                    <Label Grid.Column="0"
+           Grid.Row="2"
+           Text="信号强度"
+           FontAttributes="Bold" />
+
+                    <Label Grid.Column="1"
+           Grid.Row="0"
+           Text="{Binding Address}" />
+                    <Label Grid.Column="1"
+           Grid.Row="1"
+           Text="{Binding AddressAndName}" />
+                    <Label Grid.Column="1"
+           Grid.Row="2"
+           Text="{Binding Signal}" />
+
+                    <StackLayout
+                 Grid.Column="1"
+                 Grid.RowSpan="3"
+                 Orientation="Horizontal"
+                 HorizontalOptions="FillAndExpand">
+                      <Button Text="连接"
+                Command="{Binding ConnectToDeviceCommand}"
+             HorizontalOptions="EndAndExpand"
+                                           >
+                        <Button.TextColor>
+                          <OnPlatform x:TypeArguments="Color"
+                   WinPhone="DarkOrange" />
+                        </Button.TextColor>
+                      </Button>
+                    </StackLayout>
+                    <Button IsVisible="True"
+              Text="删除设备"
+                    Command="{Binding DeleteDeviceCommand}"
+              HorizontalOptions="Start"
+              VerticalOptions="Center" Grid.Row="3" Grid.Column="0"/>
+
+                  </Grid>
+                </Frame>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </StackLayout>
+
+    </StackLayout>
+
+  </util:BasePage>
+</TabbedPage>
+
