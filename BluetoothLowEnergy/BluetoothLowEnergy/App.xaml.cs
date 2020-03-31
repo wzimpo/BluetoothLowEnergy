@@ -28,7 +28,6 @@ namespace BluetoothLowEnergy
                     }
                     catch (Exception e)
                     {
-
                         throw;
                     }
 
