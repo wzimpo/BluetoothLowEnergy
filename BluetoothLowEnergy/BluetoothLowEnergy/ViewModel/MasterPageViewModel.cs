@@ -23,11 +23,7 @@ namespace BluetoothLowEnergy.ViewModel
             var masterPageItems = new List<MasterPageItem>();
 
             m_dialogs = dialogs;
-
-            var bleAssembly = adapter.GetType().GetTypeInfo().Assembly.GetName();
-           // Log.Info(bleAssembly.Name + "@" + bleAssembly.Version);
-
-
+            
             var gattServerPageModel = new GattServerPageModel(dialogs, adapter);
 
 
@@ -40,10 +36,7 @@ namespace BluetoothLowEnergy.ViewModel
                    {
                        await gattServerPageModel.Update(p);
                        await m_rootPage.PushAsync(new GattServerPage(gattServerPageModel));
-
                        await gattServerPageModel.OpenConnection();
-
-
                    }
                    catch (Exception e)
                    {
